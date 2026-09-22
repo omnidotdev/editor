@@ -1,6 +1,6 @@
 {
   "name": "@omnidotdev/editor",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "description": "Headless collaborative rich-text editor (Lexical + Yjs + Hocuspocus) shared across Omni products",
