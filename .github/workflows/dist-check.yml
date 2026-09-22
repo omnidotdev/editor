@@ -1,0 +1,32 @@
+name: Dist check 📦
+
+# This package is consumed as a git dependency (github:omnidotdev/editor#<tag>),
+# so its built output under build/ is committed. Guard against a stale dist: rebuild
+# and fail if the result differs from what is checked in.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  dist:
+    name: Verify committed build is current
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Rebuild
+        run: bun run build
+      - name: Ensure build/ is up to date
+        run: |
+          if ! git diff --quiet -- build/; then
+            echo "::error::build/ is stale. Run 'bun run build' and commit the result."
+            git diff --stat -- build/
+            exit 1
+          fi
