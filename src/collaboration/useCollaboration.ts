@@ -15,6 +15,11 @@ type UseCollaborationOptions = {
   url: string;
   /** Async token provider used to authenticate the connection */
   getToken: () => Promise<string>;
+  /**
+   * Maps a documentId to the Hocuspocus room name. Defaults to `doc:${id}`.
+   * Pass a stable function (memoized) to avoid reconnecting the provider.
+   */
+  documentName?: (documentId: string) => string;
   /** Whether to connect to the Hocuspocus server (cloud sync) */
   cloudEnabled?: boolean;
   /** Persistence configuration (e.g. IndexedDB key prefix) */
@@ -45,6 +50,7 @@ const useCollaboration = ({
   documentId,
   url,
   getToken,
+  documentName,
   cloudEnabled = false,
   persistence,
   onPeerCountChange,
@@ -118,6 +124,7 @@ const useCollaboration = ({
         ydoc: doc,
         url,
         getToken,
+        documentName,
       });
       providerRef.current = prov;
       setProvider(prov);
@@ -145,6 +152,7 @@ const useCollaboration = ({
     documentId,
     url,
     getToken,
+    documentName,
     cloudEnabled,
     persistence?.keyPrefix,
     cleanup,
