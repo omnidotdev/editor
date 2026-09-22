@@ -1,4 +1,6 @@
-build/
+# build/ is intentionally committed: this package is consumed as a git dependency
+# (github:omnidotdev/editor#<tag>), and bun cannot build a git dep on install, so
+# the built output must be checked in. Rebuild and commit build/ on any src change.
 node_modules/
 
 # environment
