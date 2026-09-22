@@ -60,6 +60,11 @@ type EditorCoreProps = {
   className?: string;
   /** Class applied to the contenteditable surface */
   contentEditableClassName?: string;
+  /**
+   * Wrap the editable surface (e.g. in a context menu). Receives the default
+   * ContentEditable element and must return a single element containing it.
+   */
+  renderContentEditable?: (editable: JSX.Element) => JSX.Element;
   /** Placeholder element shown when empty */
   placeholder?: JSX.Element | null;
   /** Accessible placeholder text */
@@ -102,6 +107,7 @@ export const EditorCore = ({
   plugins,
   className,
   contentEditableClassName,
+  renderContentEditable,
   placeholder = null,
   ariaPlaceholder,
   onError = defaultOnError,
@@ -123,20 +129,24 @@ export const EditorCore = ({
 
   const isCollab = Boolean(provider && ydoc);
 
+  const contentEditable = placeholder ? (
+    <ContentEditable
+      className={contentEditableClassName}
+      aria-placeholder={ariaPlaceholder ?? ""}
+      placeholder={placeholder}
+    />
+  ) : (
+    <ContentEditable className={contentEditableClassName} />
+  );
+
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <div className={cn("relative", className)}>
         <RichTextPlugin
           contentEditable={
-            placeholder ? (
-              <ContentEditable
-                className={contentEditableClassName}
-                aria-placeholder={ariaPlaceholder ?? ""}
-                placeholder={placeholder}
-              />
-            ) : (
-              <ContentEditable className={contentEditableClassName} />
-            )
+            renderContentEditable
+              ? renderContentEditable(contentEditable)
+              : contentEditable
           }
           placeholder={null}
           ErrorBoundary={LexicalErrorBoundary}
