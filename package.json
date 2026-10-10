@@ -84,7 +84,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "husky": "^9.1.7",
-    "knip": "^5.82.1",
+    "knip": "^6.0.0",
     "lexical": "^0.39.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
