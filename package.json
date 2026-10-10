@@ -88,7 +88,7 @@
     "lexical": "^0.39.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.0",
     "yjs": "^13.6.29"
   }
 }
