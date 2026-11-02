@@ -157,7 +157,7 @@ var cn = (...inputs) => inputs.filter(Boolean).join(" ");
 
 // src/editor/plugins/ImageNode.tsx
 import { $applyNodeReplacement, DecoratorNode } from "lexical";
-import { jsxDEV } from "react/jsx-dev-runtime";
+import { jsx, jsxs } from "react/jsx-runtime";
 
 class ImageNode extends DecoratorNode {
   __src;
@@ -205,22 +205,22 @@ class ImageNode extends DecoratorNode {
     return false;
   }
   decorate() {
-    return /* @__PURE__ */ jsxDEV("figure", {
+    return /* @__PURE__ */ jsxs("figure", {
       children: [
-        /* @__PURE__ */ jsxDEV("img", {
+        /* @__PURE__ */ jsx("img", {
           src: this.__src,
           alt: this.__alt,
           width: this.__width,
           height: this.__height,
           loading: "lazy",
           className: "max-w-full rounded-lg"
-        }, undefined, false, undefined, this),
-        this.__alt && /* @__PURE__ */ jsxDEV("figcaption", {
+        }),
+        this.__alt && /* @__PURE__ */ jsx("figcaption", {
           className: "mt-1 text-center text-muted-foreground text-sm",
           children: this.__alt
-        }, undefined, false, undefined, this)
+        })
       ]
-    }, undefined, true, undefined, this);
+    });
   }
 }
 function $createImageNode(src, alt, width, height) {
@@ -298,7 +298,7 @@ function LocalContentPlugin({
 }
 
 // src/editor/EditorCore.tsx
-import { jsxDEV as jsxDEV2 } from "react/jsx-dev-runtime";
+import { jsx as jsx2, jsxs as jsxs2 } from "react/jsx-runtime";
 var BASE_NODES = [
   HeadingNode,
   QuoteNode,
@@ -343,24 +343,24 @@ var EditorCore = ({
     editorState: null
   };
   const isCollab = Boolean(provider && ydoc);
-  const contentEditable = placeholder ? /* @__PURE__ */ jsxDEV2(ContentEditable, {
+  const contentEditable = placeholder ? /* @__PURE__ */ jsx2(ContentEditable, {
     className: contentEditableClassName,
     "aria-placeholder": ariaPlaceholder ?? "",
     placeholder
-  }, undefined, false, undefined, this) : /* @__PURE__ */ jsxDEV2(ContentEditable, {
+  }) : /* @__PURE__ */ jsx2(ContentEditable, {
     className: contentEditableClassName
-  }, undefined, false, undefined, this);
-  return /* @__PURE__ */ jsxDEV2(LexicalComposer, {
+  });
+  return /* @__PURE__ */ jsx2(LexicalComposer, {
     initialConfig,
-    children: /* @__PURE__ */ jsxDEV2("div", {
+    children: /* @__PURE__ */ jsxs2("div", {
       className: cn("relative", className),
       children: [
-        /* @__PURE__ */ jsxDEV2(RichTextPlugin, {
+        /* @__PURE__ */ jsx2(RichTextPlugin, {
           contentEditable: renderContentEditable ? renderContentEditable(contentEditable) : contentEditable,
           placeholder: null,
           ErrorBoundary: LexicalErrorBoundary
-        }, undefined, false, undefined, this),
-        isCollab && ydoc && provider ? /* @__PURE__ */ jsxDEV2(CollaborationPlugin, {
+        }),
+        isCollab && ydoc && provider ? /* @__PURE__ */ jsx2(CollaborationPlugin, {
           id: documentId ?? namespace,
           providerFactory: (id, yjsDocMap) => {
             yjsDocMap.set(id, ydoc);
@@ -369,21 +369,21 @@ var EditorCore = ({
           shouldBootstrap: false,
           username,
           cursorColor
-        }, undefined, false, undefined, this) : initialContent !== undefined && onContentChange ? /* @__PURE__ */ jsxDEV2(LocalContentPlugin, {
+        }) : initialContent !== undefined && onContentChange ? /* @__PURE__ */ jsx2(LocalContentPlugin, {
           initialContent,
           onContentChange
-        }, undefined, false, undefined, this) : null,
-        /* @__PURE__ */ jsxDEV2(ListPlugin, {}, undefined, false, undefined, this),
-        /* @__PURE__ */ jsxDEV2(LinkPlugin, {}, undefined, false, undefined, this),
-        /* @__PURE__ */ jsxDEV2(CheckListPlugin, {}, undefined, false, undefined, this),
-        /* @__PURE__ */ jsxDEV2(MarkdownShortcutPlugin, {
+        }) : null,
+        /* @__PURE__ */ jsx2(ListPlugin, {}),
+        /* @__PURE__ */ jsx2(LinkPlugin, {}),
+        /* @__PURE__ */ jsx2(CheckListPlugin, {}),
+        /* @__PURE__ */ jsx2(MarkdownShortcutPlugin, {
           transformers: TRANSFORMERS
-        }, undefined, false, undefined, this),
-        /* @__PURE__ */ jsxDEV2(HorizontalRulePlugin, {}, undefined, false, undefined, this),
+        }),
+        /* @__PURE__ */ jsx2(HorizontalRulePlugin, {}),
         plugins
       ]
-    }, undefined, true, undefined, this)
-  }, undefined, false, undefined, this);
+    })
+  });
 };
 // src/editor/plugins/MobileToolbar.tsx
 import {
@@ -405,7 +405,7 @@ import {
   ListOrdered,
   Quote
 } from "lucide-react";
-import { jsxDEV as jsxDEV3 } from "react/jsx-dev-runtime";
+import { jsx as jsx3 } from "react/jsx-runtime";
 function MobileToolbar() {
   const [editor] = useLexicalComposerContext2();
   const setBlock = (create) => editor.update(() => {
@@ -455,20 +455,20 @@ function MobileToolbar() {
       run: () => setBlock(() => $createQuoteNode())
     }
   ];
-  return /* @__PURE__ */ jsxDEV3("div", {
+  return /* @__PURE__ */ jsx3("div", {
     className: "fixed inset-x-0 bottom-0 z-40 flex gap-1 overflow-x-auto border-t bg-background/95 px-2 py-1.5 backdrop-blur md:hidden",
     style: { paddingBottom: "max(0.375rem, env(safe-area-inset-bottom))" },
-    children: actions.map(({ icon: Icon, label, run }) => /* @__PURE__ */ jsxDEV3("button", {
+    children: actions.map(({ icon: Icon, label, run }) => /* @__PURE__ */ jsx3("button", {
       type: "button",
       "aria-label": label,
       className: cn("inline-flex h-9 shrink-0 cursor-pointer items-center justify-center rounded-md px-3 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"),
       onMouseDown: (event) => event.preventDefault(),
       onClick: () => run(editor),
-      children: /* @__PURE__ */ jsxDEV3(Icon, {
+      children: /* @__PURE__ */ jsx3(Icon, {
         className: "h-5 w-5"
-      }, undefined, false, undefined, this)
-    }, label, false, undefined, this))
-  }, undefined, false, undefined, this);
+      })
+    }, label))
+  });
 }
 export {
   $createImageNode,
