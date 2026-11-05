@@ -143,6 +143,7 @@ import { CollaborationPlugin } from "@lexical/react/LexicalCollaborationPlugin";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { HorizontalRuleNode } from "@lexical/react/LexicalHorizontalRuleNode";
 import { HorizontalRulePlugin } from "@lexical/react/LexicalHorizontalRulePlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
@@ -373,6 +374,7 @@ var EditorCore = ({
           initialContent,
           onContentChange
         }) : null,
+        !isCollab && /* @__PURE__ */ jsx2(HistoryPlugin, {}),
         /* @__PURE__ */ jsx2(ListPlugin, {}),
         /* @__PURE__ */ jsx2(LinkPlugin, {}),
         /* @__PURE__ */ jsx2(CheckListPlugin, {}),
