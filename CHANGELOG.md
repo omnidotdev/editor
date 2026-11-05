@@ -1,5 +1,13 @@
 # @omnidotdev/editor
 
+## 0.1.2
+
+### Patch Changes
+
+- [#10](https://github.com/omnidotdev/editor/pull/10) [`9e502f4`](https://github.com/omnidotdev/editor/commit/9e502f4c79fe94598ded59ff21f239f552f2689c) Thanks [@coopbri](https://github.com/coopbri)! - fix(editor): restore undo/redo in local (non-collaborative) mode
+  
+  `EditorCore` never registered a history handler for local-first editing, so `UNDO_COMMAND`/`REDO_COMMAND` (dispatched by keyboard shortcuts and menus) were silently dropped and undo/redo did nothing. Collaborative mode was unaffected because `CollaborationPlugin` owns history via the Yjs `UndoManager`. Add Lexical's `HistoryPlugin`, gated to local mode only (`!isCollab`), so it never conflicts with the collaborative undo stack.
+
 ## 0.1.1
 
 ### Patch Changes
