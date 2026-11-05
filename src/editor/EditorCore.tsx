@@ -6,6 +6,7 @@ import { CollaborationPlugin } from "@lexical/react/LexicalCollaborationPlugin";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { HorizontalRuleNode } from "@lexical/react/LexicalHorizontalRuleNode";
 import { HorizontalRulePlugin } from "@lexical/react/LexicalHorizontalRulePlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
@@ -169,6 +170,11 @@ export const EditorCore = ({
             onContentChange={onContentChange}
           />
         ) : null}
+
+        {/* History (undo/redo) only in local mode. In collaborative mode the
+            Yjs UndoManager inside CollaborationPlugin owns history, and mixing
+            HistoryPlugin with it corrupts the shared undo stack */}
+        {!isCollab && <HistoryPlugin />}
 
         <ListPlugin />
         <LinkPlugin />
